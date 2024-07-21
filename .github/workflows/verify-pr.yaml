@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: |
+    - name: check forbidden files
+      run: |
         gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
         cat changed-files.txt
         cat config/forbidden-files.txt
@@ -28,3 +29,22 @@ jobs:
         done;    
       env:
         GH_TOKEN: ${{ github.token }}
+    - name: check forbidden keywords
+      run: |
+        gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
+        cat changed-files.txt
+        cat config/safelisted-files.txt
+        echo
+        echo
+        for allowed_file in $(cat config/safelisted-files.txt); do
+          sed '/$allowed_file/!d' changed-files.txt
+        done
+        echo
+        echo
+        cat changed-files.txt
+        echo
+        echo
+        for changed_file in $(cat changed-files.txt); do
+          echo $changed_file
+        done
+        

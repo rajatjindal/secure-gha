@@ -1,2 +1,4 @@
 .github/workflows/verify-pr.yaml
+changed-files.txt
 forbidden-dir/add-new-file.txt
+test.sh

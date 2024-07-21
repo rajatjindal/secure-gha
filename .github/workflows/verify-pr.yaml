@@ -11,10 +11,10 @@ jobs:
     - run:
         gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
         cat changed-files.txt
-        for forbidden_file in $(cat config/forbidden-files.txt); do
-          echo "forbidden file $forbidden_file changed"
-        done;
-
+        cat config/forbidden-files.txt
+        # for forbidden_file in $(cat config/forbidden-files.txt); do
+        #   echo "forbidden file $forbidden_file changed"
+        # done;
         ##for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;    
       env:
         GH_TOKEN: ${{ github.token }}

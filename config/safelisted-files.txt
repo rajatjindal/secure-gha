@@ -1,1 +1,1 @@
-forbidden-keywords.txt
+config/forbidden-keywords.txt

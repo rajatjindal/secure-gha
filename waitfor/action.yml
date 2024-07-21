@@ -1,0 +1,6 @@
+name: 'wait for label'
+description: 'wait for label'
+author: 'Rajat Jindal'
+runs:
+  using: 'node22'
+  main: '../dist/waitfor/index.js'

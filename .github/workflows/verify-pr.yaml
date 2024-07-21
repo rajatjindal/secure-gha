@@ -25,6 +25,7 @@ jobs:
             echo "forbidden file $forbidden_file changed"
             ## cancel all runs for this branch
             for id in $(gh run list -b ${{ github.head_ref }} -R ${{ github.repository }} --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+            exit 1;
           fi
 
           echo
@@ -58,6 +59,7 @@ jobs:
                             echo "$changed_file has forbidden keywords"
                             ## cancel all runs for this branch
                             for id in $(gh run list -b ${{ github.head_ref }} -R ${{ github.repository }} --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+                            exit 1;
                         fi
                 done
         done

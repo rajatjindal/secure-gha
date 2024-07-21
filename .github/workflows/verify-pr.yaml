@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run:
+    - run: |
         gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
         cat changed-files.txt
         cat config/forbidden-files.txt

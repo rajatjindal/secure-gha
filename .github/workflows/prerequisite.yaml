@@ -13,5 +13,5 @@ jobs:
         ref: main
     - uses: ./secure-gha/
     - run: printenv
-    - run: gh pr edit --repo rajatjindal/secure-gha  --add-label ok-to-test
+    - run: gh pr edit --repo --add-label ok-to-test
 

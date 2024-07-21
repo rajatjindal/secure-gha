@@ -61,5 +61,5 @@ jobs:
                         fi
                 done
         done
-
-        
+      env:
+        GH_TOKEN: ${{ github.token }}

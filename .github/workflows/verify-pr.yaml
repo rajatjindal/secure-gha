@@ -10,8 +10,8 @@ jobs:
     - uses: actions/checkout@v4
     - run:
         gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
-        for forbidden_file in `cat config/forbidden-files.txt`; do
-          if $(grep $forbidden_file changed-files.txt); then
+        for forbidden_file in $(cat config/forbidden-files.txt); do;
+          if [[ $(grep $forbidden_file changed-files.txt) ]]; then
             echo "forbidden file $forbidden_file changed"
           fi
         done;

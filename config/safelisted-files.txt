@@ -1,1 +1,2 @@
 config/forbidden-keywords.txt
+thisfilecanhavekeywords.txt

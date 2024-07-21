@@ -2,7 +2,7 @@
 
 release=v0.1.0
 
-gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
+gh pr diff 1 -R cloudpremise/secure-gha --name-only > changed-files.txt
 echo "changed files:"
 cat changed-files.txt
 echo
@@ -25,7 +25,7 @@ for changed_file in $(cat changed-files.txt); do
 		if [[ $? -eq "0" ]]; then
 			echo "$changed_file has forbidden keywords"
 			## cancel all runs for this branch
-			for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+			for id in $(gh run list -b check-pr -R cloudpremise/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
 		fi
 	done
 done

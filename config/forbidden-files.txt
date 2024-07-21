@@ -1,2 +1,6 @@
 forbidden-dir
 allowed-dir/some-forbidden-file.txt
+config/forbidden-files.txt
+config/forbidden-keywords.txt
+config/safelisted-files.txt
+test.sh

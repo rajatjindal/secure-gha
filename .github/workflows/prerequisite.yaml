@@ -1,8 +1,6 @@
 name: Check PR Prequisites
 on:
-  pull_request_target: 
-    branches: [main]
-  workflow_dispatch: {}
+  workflow_call: 
 
 permissions:
   pull-requests: write
@@ -18,7 +16,4 @@ jobs:
         ref: main
     - uses: ./secure-gha/
     - run: printenv
-    - run: gh pr edit ${{ github.event.number }} --add-label ok-to-test
-      env:
-        GH_TOKEN: ${{ github.token }}
 

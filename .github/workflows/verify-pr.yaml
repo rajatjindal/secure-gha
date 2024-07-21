@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v4
     - run:
         for file in $(gh pr diff 1 -R rajatjindal/secure-gha --name-only); do
-          echo "$file"
+          echo "$file";
         done;
 
         ##for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;    

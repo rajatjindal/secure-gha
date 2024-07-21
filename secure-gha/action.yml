@@ -1,0 +1,6 @@
+name: 'Check prerequisites'
+description: 'check gha prerequisites'
+author: 'Rajat Jindal'
+runs:
+  using: 'node16'
+  main: '../dist/secure-gha/index.js'

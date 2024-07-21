@@ -9,8 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run:
-        for file in $(gh pr diff 1 -R rajatjindal/secure-gha --name-only); do
-          echo "$file";
+        gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
+        for forbidden_file in `cat config/forbidden-files.txt`; do
+          if $(grep $forbidden_file changed-files.txt); then
+            echo "forbidden file $forbidden_file changed"
+          fi
         done;
 
         ##for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;    

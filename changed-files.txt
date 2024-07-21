@@ -1,0 +1,2 @@
+.github/workflows/verify-pr.yaml
+forbidden-dir/add-new-file.txt

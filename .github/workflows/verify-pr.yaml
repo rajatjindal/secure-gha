@@ -21,8 +21,7 @@ jobs:
         echo
         for forbidden_file in $(cat config/forbidden-files.txt); do
           echo "file is $forbidden_file"
-          grep $forbidden_file changed-files.txt
-          if [[ $? -eq "0" ]]; then
+          if grep -q $forbidden_file changed-files.txt; then
             echo "forbidden file $forbidden_file changed"
             ## cancel all runs for this branch
             for id in $(gh run list -b ${{ github.head_ref }} -R ${{ github.repository }} --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
@@ -48,19 +47,17 @@ jobs:
         echo
         echo
         for changed_file in $(cat changed-files.txt); do
-                grep $changed_file config/safelisted-files.txt 2>&1 >/dev/null
-                if [[ $? -eq "0" ]]; then
+                if grep -q $changed_file config/safelisted-files.txt; then
                         echo "file $changed_file is safelisted for keywords check"
                         continue
                 fi
 
                 for keyword in $(cat config/forbidden-keywords.txt); do
                         echo "checking for keyword $keyword"
-                        grep $keyword $changed_file
-                        if [[ $? -eq "0" ]]; then
-                                echo "$changed_file has forbidden keywords"
-                                ## cancel all runs for this branch
-                                for id in $(gh run list -b ${{ github.head_ref }} -R ${{ github.repository }} --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+                        if grep -q $keyword $changed_file; then
+                            echo "$changed_file has forbidden keywords"
+                            ## cancel all runs for this branch
+                            for id in $(gh run list -b ${{ github.head_ref }} -R ${{ github.repository }} --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
                         fi
                 done
         done

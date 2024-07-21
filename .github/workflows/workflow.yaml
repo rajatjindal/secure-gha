@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production
+    environment: prod
     steps:
     - uses: actions/checkout@v4
     - run: echo "i am other workflow"

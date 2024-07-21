@@ -7,8 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - uses: actions/checkout@v4
     - uses: ./.github/workflows/entrypoint.yaml
     - run: echo "i am other workflow"
-
+    - run: echo "secret is ${{ secrets.MY_SECRET }}"
+    - run: echo "variable is ${{ vars.MY_VARIABLE }}"

@@ -1,15 +1,14 @@
-name: other workflow
+name: deployment to prod
 on:
-  pull_request:
+  push:
     branches: [main]
   workflow_dispatch: {}
-if: environment == "prod"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: prod
     steps:
     - uses: actions/checkout@v4
-    - run: echo "i am other workflow"
     - run: echo "secret is ${{ secrets.MY_SECRET }}"
     - run: echo "variable is ${{ vars.MY_VARIABLE }}"

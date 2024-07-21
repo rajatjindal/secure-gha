@@ -8,4 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: ./secure-gha/
+    - run:
+        for file in $(gh pr diff 1 -R rajatjindal/secure-gha --name-only); do
+          echo "$file"
+        done;
+
+        ##for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;    

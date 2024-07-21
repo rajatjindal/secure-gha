@@ -14,4 +14,6 @@ jobs:
     - uses: ./secure-gha/
     - run: printenv
     - run: gh pr edit --repo --add-label ok-to-test
+      env:
+        GH_TOKEN: ${{ github.token }}
 

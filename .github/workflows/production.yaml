@@ -1,6 +1,6 @@
 name: Check PR Prequisites
 on:
-  workflow_call: 
+  pull_request: {}
 
 permissions:
   pull-requests: write
@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - uses: actions/checkout@v4
       with:

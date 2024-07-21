@@ -1,4 +1,4 @@
-name: other workflow
+name: verify-pr
 on:
   pull_request:
   workflow_dispatch: {}
@@ -8,4 +8,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: ./secure-gha/
+    - name: check forbidden files
+      run: |
+        gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
+        cat changed-files.txt
+        cat config/forbidden-files.txt
+        echo
+        echo
+        for forbidden_file in $(cat config/forbidden-files.txt); do
+          echo "file is $forbidden_file"
+          grep $forbidden_file changed-files.txt
+          if [[ $? -eq "0" ]]; then
+            echo "forbidden file $forbidden_file changed"
+            ## cancel all runs for this branch
+            for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+          fi
+
+          echo
+          echo
+        done;    
+      env:
+        GH_TOKEN: ${{ github.token }}
+    - name: check forbidden keywords
+      run: |
+        #!/bin/bash
+
+        gh pr diff 1 -R rajatjindal/secure-gha --name-only > changed-files.txt
+        echo "changed files:"
+        cat changed-files.txt
+        echo
+        echo
+
+        echo "safelisted files"
+        cat config/safelisted-files.txt
+        echo
+        echo
+        for changed_file in $(cat changed-files.txt); do
+                grep $changed_file config/safelisted-files.txt 2>&1 >/dev/null
+                if [[ $? -eq "0" ]]; then
+                        echo "file $changed_file is safelisted for keywords check"
+                        continue
+                fi
+
+                for keyword in $(cat config/forbidden-keywords.txt); do
+                        echo "checking for keyword $keyword"
+                        grep $keyword $changed_file
+                        if [[ $? -eq "0" ]]; then
+                                echo "$changed_file has forbidden keywords"
+                                ## cancel all runs for this branch
+                                for id in $(gh run list -b check-pr -R rajatjindal/secure-gha --json databaseId | jq '.[].databaseId'); do gh run cancel $id; done;
+                        fi
+                done
+        done
+
+        

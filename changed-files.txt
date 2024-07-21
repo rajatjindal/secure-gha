@@ -1,0 +1,6 @@
+.github/workflows/verify-pr.yaml
+changed-files.txt
+config/forbidden-keywords.txt
+config/safelisted-files.txt
+forbidden-dir/add-new-file.txt
+test.sh
